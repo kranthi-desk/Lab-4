@@ -11,9 +11,6 @@ class Match extends React.Component {
 			items: [],
 			DataisLoaded: false
 		};
-		this.page = 0;
-		// this.prev = this.prev.bind(this);
-		// this.next = this.next.bind(this);
 	}
 	componentDidMount() {
 		fetch(`http://localhost:5000/matches/0/10`)
@@ -25,20 +22,11 @@ class Match extends React.Component {
 				});
 			})
 	}
-	kk(){
-		// this.page = this.page + 10;
-		// window.location.reload(true);
-		console.log("hello");
-	}
-	// prev(){
-	// 	// this.page = this.page + 10;
-	// 	// window.location.reload(false);
-	// }
 	
 
 	render() {
 		const { DataisLoaded, items } = this.state;
-		const page = this.page;
+		console.log(items);
 		if (!DataisLoaded) return <div>
 			<h1> Loading.... </h1> </div> ;
 
@@ -47,24 +35,23 @@ class Match extends React.Component {
 				<div >
 					<main>
 					<h1> Matches </h1> 
-					<h1> {page} </h1>
 					{
 						items.map((item) => (
-						<Button color="primary" className="px-4"  >
-						<a className="boxhead" href = {`matches/${item.match_id}`}>
-						<div className="boxed" >
-							<h2> {item.team1} vs { item.team2 }</h2>
-							<h3> { item.venue_name }, {item.city_name}</h3>
-							{ item.team1 } won by { item.win_margin } { item.win_type}
-						</div>
-						</a>
-						</Button>
+							<Button color="primary" className="px-4"  >
+								<a className="boxhead" href = {`matches/${item.match_id}`}>
+									<div className="boxed" >
+										<h2> {item.team1} vs { item.team2 }</h2>
+										<h3> { item.venue_name }, {item.city_name}</h3>
+										{ item.team1 } won by { item.win_margin } { item.win_type}
+									</div>
+								</a>
+							</Button>
 						))
 					}
 					</main>
 
 					<left>
-						<Button onclick={() => this.kk()} >
+						<Button onclick={this.next} >
 							previous page
 						</Button>
 					</left>
@@ -77,15 +64,16 @@ class Match extends React.Component {
 				</div>
 
 				<style jsx>{`
-
 				h1{
 					text-align: center;
 				}
-
 				main{
+					margin: 0 auto;
+                    width: 70%;
 					text-align: center;
 					z-index: 1;
 				}
+
 				.boxed {
 					z-index: 1;
 					width: 800px;
@@ -115,18 +103,6 @@ class Match extends React.Component {
 					background-color: grey;
 				}
 				`}</style>
-				<script>{
-
-				// function prev(){
-				// 	if(this.page != 0) page = this.page - 10
-				// 	window.location.reload(false)
-				// }
-				// function next(){
-				// 	this.page = this.page + 10
-				// 	window.location.reload(false)
-				// }
-					
-				}</script>
 
 				</div>
 		);

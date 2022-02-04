@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';  
 import { Button} from 'reactstrap';
 import LineChart from './lineChart'; 
+import Summary from './summary';
 import {
   BrowserRouter,
   Switch,
@@ -31,6 +32,8 @@ function MatchDetails(){
     const [bowling2, setBowling2] = useState([]);
 
     const [state, setState] = useState({showChart: 0});
+    const [summarystate, setSummarystate] = useState({showChart: 0});
+
 
 
     const getChart = (value) => {
@@ -104,12 +107,18 @@ function MatchDetails(){
                     <Button onClick={() => getChart("d")}>
                     Score Comparison
                     </Button>
-                    
+                    &nbsp;&nbsp;
+                    <Button onClick={() => getChart("s")}>
+                    Match Summary
+                    </Button>
                 </right>
                 <LineChart
                     show = {state.showChart === "d"}
                     onHide={() => hideChart("d")}
-                    name={"LineChart"}
+                />
+                <Summary
+                    show = {state.showChart === "s"}
+                    onHide={() => hideChart("s")}
                 />
 
                 <main>
@@ -297,13 +306,15 @@ function MatchDetails(){
                     text-align: center;
                 }
                 main{
-                    margin: 0 auto;
+					margin: 0 auto;
                     width: 70%;
-                }
+					text-align: center;
+					z-index: 1;
+				}
                 right {
 					color: rgb(256,0,0);
                     position: absolute;
-					right: 30%;
+					right: 100px;
 					top: 9px;
 				}
             `}</style>
