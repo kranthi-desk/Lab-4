@@ -1,19 +1,17 @@
 import React, {createRef} from "react";
 import { Button} from 'reactstrap';
 
-
 class Match extends React.Component {
-	
-
 	constructor(props) {
 		super(props);
 		this.state = {
 			items: [],
-			DataisLoaded: false
+			DataisLoaded: false,
+			page:1
 		};
 	}
-	componentDidMount() {
-		fetch(`http://localhost:5000/matches/0/10`)
+	async componentDidMount() {
+		fetch(`http://localhost:5000/matches/${parseInt((this.state.page-1)*10)}/10`)
 			.then((res) => res.json())
 			.then((json) => {
 				this.setState({
@@ -22,11 +20,21 @@ class Match extends React.Component {
 				});
 			})
 	}
-	
+	Incrementpage = async() => {
+		if(this.state.page < 10){
+			await this.setState({ page: this.state.page + 1 });
+			this.componentDidMount()
+		}
+	}
+	Decreasepage = async() => {
+		if(this.state.page > 1){
+			await this.setState({ page: this.state.page - 1 });
+			this.componentDidMount()
+		}
+	}
 
 	render() {
 		const { DataisLoaded, items } = this.state;
-		console.log(items);
 		if (!DataisLoaded) return <div>
 			<h1> Loading.... </h1> </div> ;
 
@@ -35,45 +43,45 @@ class Match extends React.Component {
 				<div >
 					<main>
 					<h1> Matches </h1> 
+					<h1> Page {this.state.page} of 10 </h1>
 					{
 						items.map((item) => (
-							<Button color="primary" className="px-4"  >
-								<a className="boxhead" href = {`matches/${item.match_id}`}>
-									<div className="boxed" >
-										<h2> {item.team1} vs { item.team2 }</h2>
-										<h3> { item.venue_name }, {item.city_name}</h3>
-										{ item.team1 } won by { item.win_margin } { item.win_type}
-									</div>
-								</a>
-							</Button>
+						<Button color="primary" className="px-4"  >
+						<a className="boxhead" href = {`matches/${item.match_id}`}>
+						<div className="boxed" >
+							<h2> {item.team1} vs { item.team2 }</h2>
+							<h3> { item.venue_name }, {item.city_name}</h3>
+							{ item.team1 } won by { item.win_margin } { item.win_type}
+						</div>
+						</a>
+						</Button>
 						))
 					}
 					</main>
 
 					<left>
-						<Button onclick={this.next} >
-							previous page
+						<Button onClick={this.Decreasepage} >
+							Previous Page
 						</Button>
 					</left>
 					<right>
-						<Button onclick={this.next}>
-							next page
+						<Button onClick={this.Incrementpage}>
+							Next Page
 						</Button>
 					</right>
 					
 				</div>
 
 				<style jsx>{`
+
 				h1{
 					text-align: center;
 				}
+
 				main{
-					margin: 0 auto;
-                    width: 70%;
 					text-align: center;
 					z-index: 1;
 				}
-
 				.boxed {
 					z-index: 1;
 					width: 800px;
