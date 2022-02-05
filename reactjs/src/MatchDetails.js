@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button} from 'reactstrap';
 import LineChart from './lineChart'; 
 import Summary from './summary';
+import PieChart from './PieChart';
+
 import {
   BrowserRouter,
   Switch,
@@ -25,14 +27,13 @@ function MatchDetails(){
     const [team2xi, setTeam2xi] = useState([]);
 
 
-
+    const id_match = match_id;
     const [batting1, setBatting1] = useState([]);
     const [bowling1, setBowling1] = useState([]);
     const [batting2, setBatting2] = useState([]);
     const [bowling2, setBowling2] = useState([]);
 
     const [state, setState] = useState({showChart: 0});
-    const [summarystate, setSummarystate] = useState({showChart: 0});
 
 
 
@@ -111,14 +112,22 @@ function MatchDetails(){
                     <Button onClick={() => getChart("s")}>
                     Match Summary
                     </Button>
+                    &nbsp;&nbsp;
+                    <Button onClick={() => getChart("p")}>
+                    Pie Chart
+                    </Button>
                 </right>
-                <LineChart
+                <LineChart m_id = {id_match}
                     show = {state.showChart === "d"}
                     onHide={() => hideChart("d")}
                 />
                 <Summary
                     show = {state.showChart === "s"}
                     onHide={() => hideChart("s")}
+                />
+                <PieChart m_id = {id_match}
+                    show = {state.showChart === "p"}
+                    onHide={() => hideChart("p")}
                 />
 
                 <main>
@@ -249,7 +258,7 @@ function MatchDetails(){
                     <h1> Match-Info </h1>
                     {
                         info.map((item) => (
-                            <h4>
+                            <div>
                                 <b>Match:</b>
                                 <br></br>
                                 {item.match_id}, {item.team1} vs {item.team2}, {item.season_year}
@@ -292,7 +301,7 @@ function MatchDetails(){
                                 }
                                 <br></br>
 
-                            </h4>
+                            </div>
                         ))
                     } 
                 </main>

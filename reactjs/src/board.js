@@ -6,6 +6,7 @@ import {
     Route,
     useParams,
   } from "react-router-dom";
+import PieChart from './PieChart';
 
 
 function Board(){
@@ -21,6 +22,8 @@ function Board(){
     const [runs2, setRuns2] = useState([]);
     const [wickets1, setWickets1] = useState([]);
     const [wickets2, setWickets2] = useState([]);
+    const [details, setDetails] = useState([]);
+
 
 
 
@@ -52,11 +55,11 @@ function Board(){
         fetchdata(api5).then(data => {
             setBatters2(data)
         })
-        const api6 = `http://localhost:5000/match/${match_id}/bowl/1`;
+        const api6 = `http://localhost:5000/match/${match_id}/bowling/1`;
         fetchdata(api6).then(data => {
             setBowlers1(data)
         })
-        const api7 = `http://localhost:5000/match/${match_id}/bowl/2`;
+        const api7 = `http://localhost:5000/match/${match_id}/bowling/2`;
         fetchdata(api7).then(data => {
             setBowlers2(data)
         })
@@ -76,46 +79,137 @@ function Board(){
         fetchdata(api11).then(data => {
             setWickets2(data)
         })
+        const api12 = `http://localhost:5000/match/${match_id}/details`;
+        fetchdata(api12).then(data => {
+            setDetails(data)
+        })
     }, [])
-    // const info = [team1,team2,season_year,batters1,batters2,bowlers1,bowlers2];
-    // console.log(season_year);
+
+    var divs = document.getElementById('container1');
+    var divArray1 = [];
+    for (var i = 0; i < 3; i += 1) {
+        divArray1.push(
+            <div>
+                <div id="left">
+                    <a href = {"http://localhost:5000/player/"+batters1[i].player_id+"/info"}>
+                            {batters1[i].player_name}
+                    </a> 
+                    <mi>
+                        <b>{batters1[i].runs}</b>&nbsp;&nbsp;{batters1[i].balls}
+                    </mi>
+                </div>
+                <div id="right">
+                    <a href = {"http://localhost:5000/player/"+bowlers1[i].player_id+"/info"}>
+                            {bowlers1[i].bowler}
+                    </a> 
+                    <mi>
+                        <b>{bowlers1[i].wickets}-{bowlers1[i].runs_given}</b> {bowlers1[i].overs_bowled}.{bowlers1[i].balls_bowled}
+                    </mi>
+                </div>
+            </div>
+        );
+    }
+
+    var divs = document.getElementById('container2');
+    var divArray2 = [];
+    for (var i = 0; i < 3; i += 1) {
+        divArray2.push(
+            <div>
+                <div id="left">
+                    <a href = {"http://localhost:5000/player/"+batters2[i].player_id+"/info"}>
+                            {batters2[i].player_name}
+                    </a> 
+                    <mi>
+                        <b>{batters2[i].runs}</b>&nbsp;&nbsp;{batters2[i].balls}
+                    </mi>
+                </div>
+                <div id="right">
+                    <a href = {"http://localhost:5000/player/"+bowlers2[i].player_id+"/info"}>
+                            {bowlers2[i].bowler}
+                    </a> 
+                    <mi>
+                        <b>{bowlers2[i].wickets}-{bowlers2[i].runs_given}</b> {bowlers2[i].overs_bowled}.{bowlers2[i].balls_bowled}
+                    </mi>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div>
-
-            <table class="table table-striped">
-                <tr class="bg-info">
-                    <th><h5><b>MATCH SUMMARY</b></h5></th>
-                </tr>
-                <tr class="bg-info">
-                    <th>{match_id}, IPL {season_year[0].season_year}</th>
-                </tr>
-                <tr class="bg-info">
-                    <th>{team1[0].team_name} <r> {runs1[0].sum}-{wickets1[0].sum} </r></th>
-                </tr>
-                <tr>
-                    
-                </tr>
-                {/* <tbody id="myTable">
+            {/* <div >
+                {divArray1}
+            </div> */}
+        
+                        
+            <table className="table table-striped">
+                
+                <tbody id="myTable">
+                    <tr className="bg-info">
+                        <th><h5><b>MATCH SUMMARY</b></h5></th>
+                    </tr>
+                    <tr className="bg-info">
+                        <th>{match_id}, IPL {season_year[0].season_year}</th>
+                    </tr>
+                    <tr className="bg-info">
+                        <th>{team1[0].team_name} <r> {runs1[0].sum}-{wickets1[0].sum} </r></th>
+                    </tr>
+                    <tr>
+                        
+                    </tr>
                     {   
                         <tr>
-                        <td>{batters1[0].player_name}<span style="display:inline-block; width: 10px;"></span> <b>{batters1[0].runs}</b> {batters1[0].balls}</td>
+                            <td>
+                                <div id="container1">
+                                    {divArray1}
+                                </div>
+                            </td>
                         </tr>
+                        
                     }
-                </tbody> */}
+                    <tr className="bg-info">
+                        <th>{team2[0].team_name} <r> {runs2[0].sum}-{wickets2[0].sum} </r></th>
+                    </tr>
+                    {   
+                        <tr>
+                            <td>
+                                <div id="container2">
+                                    {divArray2}
+                                </div>
+                            </td>
+                        </tr>
+                        
+                    }
+                    <tr className="bg-info">
+                        <th>{details[0].match_winner} won by {details[0].win_margin} {details[0].win_type}</th>
+                    </tr>
+                </tbody>
+                
             </table>
+            
 
             <style jsx>{`
-                
+                #container{width:100%;}
+                #left{float:left;width:50%;}
+                #right{float:right;width:50%;}
+                mi{
+                    float: right;
+                    margin-right: 50px;
+                }
                 r {
                     float: right;
                     margin-right: 50px;
-				}
+                }
                 .space{
                     width: 10%;
                 }
             `}</style>
+
         </div>
+
+                
+
+            
     )
 }
 

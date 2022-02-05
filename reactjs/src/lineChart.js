@@ -11,6 +11,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import PropTypes from "prop-types";
 
 ChartJS.register(
   CategoryScale,
@@ -26,8 +27,10 @@ export const options = {
     responsive: true,
     plugins: {
         legend: {
-            position: 'top',
-            align: 'center',
+            labels: {
+                fontSize: 6,
+                // usePointStyle:true,
+          }
         },
         title: {
             display: true,
@@ -42,17 +45,18 @@ export const options = {
             
     },
     scales:{
-        xAxes:
-            {
-                label:"category",
-            // ticks:{
-            //     callback:function(label){
-            //     var month = label.split(";")[0];
-            //     var year = label.split(";")[1];
-            //     return month;
-            //     }
-            // }
-            }
+        y:{
+            title: {
+                display: true,
+                text: 'RUNS'
+              }
+        },
+        x:{
+            title: {
+                display: true,
+                text: 'OVERS'
+              }
+        }
     }
 };
 function customRadius( context )
@@ -64,45 +68,53 @@ function customRadius( context )
 
 
 class LineChart extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
             team1: [],
             team2: [],
-            info: []
+            info: [],
+            details: []
         };
-        // this.match_id = props.match.params.match_id;
+        this.match_id = this.props.m_id;
         // console.log(this.match_id);
     }
     componentDidMount() {
         // const { id } = this.props.match.params;
-        fetch(`http://localhost:5000/match/501203/scorecomparison/team1`)
+        fetch(`http://localhost:5000/match/${this.match_id}/scorecomparison/team1`)
           .then((res) => res.json())
           .then((json) => {
             this.setState({
                 team1: json
               });
             })
-        fetch(`http://localhost:5000/match/501203/details`)
+        fetch(`http://localhost:5000/match/${this.match_id}/details`)
             .then((res) => res.json())
             .then((json) => {
                 this.setState({
                     info: json
                 });
             })
-        fetch(`http://localhost:5000/match/501203/scorecomparison/team2`)
+        fetch(`http://localhost:5000/match/${this.match_id}/scorecomparison/team2`)
         .then((res) => res.json())
         .then((json) => {
             this.setState({
                 team2: json
             });
             })
+        fetch(`http://localhost:5000/match/${this.match_id}/details`)
+        .then((res) => res.json())
+        .then((json) => {
+            this.setState({
+                details: json
+            });
+            })
 	  }
     
   render() {
-    // console.log(this.props.show);
-    const { team1, team2, info } = this.state;
+    // const { match, location, history } = this.props;
+
+    const { team1, team2, info, details } = this.state;
     const values1 =  [];
     const wickets1 =  [];
     const wickets2 =  [];
@@ -159,11 +171,20 @@ class LineChart extends Component {
       <React.Fragment>
         {this.props.show && (
           <div className="chart">
-            <button onClick={this.props.onHide}>Close</button>
-            <Line options={options} data={data} />
+            <div style= {{display: 'flex', justifyContent: 'right'}}>
+                  <button onClick={this.props.onHide}>Close</button>
+            </div>
+      
+            <Line options={options} data={data}/>
+            <div style= {{display: 'flex', justifyContent: 'center'}}>
+                <h2 > {details[0].match_winner} won by {details[0].win_margin} {details[0].win_type}</h2>
+            </div>
+            
           </div>
         )}
       </React.Fragment>
+
+      
     );
   }
 }
