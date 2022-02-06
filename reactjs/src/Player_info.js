@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';  
 import { Bar } from 'react-chartjs-2';
+import 'chartjs-plugin-datalabels';
 import "./lineChart.css";
 import {
     BrowserRouter,
@@ -122,8 +123,8 @@ function PlayerInfo(){
         // console.log(context);
         let index = context.dataIndex;
         let value = parseInt(context.dataset.data[index]);
-        if(value < 30) return "aqua";
-        if(value < 50) return "green";
+        if(value < 30) return "magenta";
+        if(value < 50) return "#008ae6";
         return "red";
     };
 
@@ -154,61 +155,75 @@ function PlayerInfo(){
         bars.push(bowlstats[i].runs_given);
     }
 
-    const stackdata = {
-        // Name of the variables on x-axies for each bar
-        labels: labels1,
-        datasets: [
-        {
-            // Label for bars
-            label: 'runs',
-            // Data or value of your each variable
-            data: bars,
-            // Color of each bar
-            backgroundColor: "aqua",
-            borderWidth: 0.5,
-            type: 'bar'
-        },
-        {
-            // Data or value of your each variable
-            data: lines,
-            label: 'wickets',
-            // Color of each bar
-            backgroundColor: "red",
-            borderWidth: 0.5,
-            type: 'line',
-            stack: 'combined'
-        }
-        ],
-    };
-
     const options1 = {
         maintainAspectRatio: true,
         elements: {
             height: '100px',
+            pointStyle: 'rectRounded'
+        },
+        plugins: {
+            datalabels: {
+                anchor: 'end',
+                align: 'top',
+                font: {
+                    weight: 'bold'
+                }
+            }
         },
         scales:{
-            y:{
-                stacked: true,
+            y1:{
                 title: {
                     display: true,
-                    text: 'RUNS / WICKETS'
-                  }
+                    text: 'RUNS'
+                  },
+                position: 'left',
             },
-            x:{
+            y2:{
+                title: {
+                    display: true,
+                    text: 'WICKETS'
+                  },
+                position: 'right',
+            },
+            xAxes:{
                 title: {
                     display: true,
                     text: 'MATCH_ID'
                   }
             }
         },
-        elements:{
-             pointStyle: "rect"
-        },
+
         legend:{
             display: false,
+        },
+    }
+
+    const stackdata = {
+        // Name of the variables on x-axies for each bar
+        labels: labels1,
+        datasets: [
+        {
+            order: 2,
+            label: 'runs',
+            data: bars,
+            pointStyle: 'rect',
+            backgroundColor: "#33CCCC",
+            type: 'bar'
+        },
+        {
+            order: 1,
+            data: lines,
+            label: 'wickets',
+            backgroundColor: "red",
+            type: 'line',
+            // stack: 'combined'
         }
-        
+        ],
     };
+
+    
+        
+        
 
     return(
 
@@ -357,7 +372,7 @@ function PlayerInfo(){
             `}</style>
 
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+            <script src="chartjs-plugin-datalabels.js"></script>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
 
         </div>
