@@ -67,7 +67,6 @@ function Venues(){
 		
 				.btn:hover {
 					color: black;
-					background-color: skyblue;
 				}
 				`}</style>
         </div>

@@ -119,7 +119,6 @@ class Match extends React.Component {
 		
 				.btn:hover {
 					color: black;
-					background-color: skyblue;
 				}
 				`}</style>
 
