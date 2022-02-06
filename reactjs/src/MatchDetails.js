@@ -217,7 +217,7 @@ function MatchDetails(){
                             {   
                                 batting2.map((item) => (
                                     <tr>
-                                    <td>{item.batter}</td>
+                                    <td><a href = {`/players/${item.player_id}/`}>{item.batter}</a></td>
                                     <td>{item.runs}</td> 
                                     <td>{item.fours}</td> 
                                     <td>{item.sixes} </td> 
@@ -246,7 +246,7 @@ function MatchDetails(){
                             {   
                                 bowling2.map((item) => (
                                     <tr>
-                                    <td>{item.bowler}</td>
+                                    <td><a href = {`/players/${item.player_id}/`}>{item.bowler}</a></td>
                                     <td>{item.balls_bowled}</td> 
                                     <td>{item.runs_given}</td> 
                                     <td>{item.wickets} </td> 
