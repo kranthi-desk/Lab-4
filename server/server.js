@@ -289,7 +289,12 @@ app.get("/match/:match_id/wickets/:innings", async (req, res) => {
 app.get("/match/:match_id/distribution/:innings", async (req, res) => {
     try {
         const { match_id,innings } = req.params;
-        const allTodos = await pool.query(`SELECT team.team_name, SUM(CASE WHEN ball_by_ball.runs_scored=1 THEN 1 ELSE 0 END) as ones, SUM(CASE WHEN ball_by_ball.runs_scored=2 THEN 1 ELSE 0 END) as twos, SUM(CASE WHEN ball_by_ball.runs_scored=3 THEN 1 ELSE 0 END) as threes, SUM(CASE WHEN ball_by_ball.runs_scored=4 THEN 1 ELSE 0 END) as fours, SUM(CASE WHEN ball_by_ball.runs_scored=6 THEN 1 ELSE 0 END) as sixes, SUM(ball_by_ball.extra_runs) AS extras, COUNT(ball_by_ball.ball_id) as total_balls
+        const allTodos = await pool.query(`SELECT team.team_name, SUM(CASE WHEN ball_by_ball.runs_scored=1 THEN 1 ELSE 0 END) as ones,
+         2*SUM(CASE WHEN ball_by_ball.runs_scored=2 THEN 1 ELSE 0 END) as twos,
+          3*SUM(CASE WHEN ball_by_ball.runs_scored=3 THEN 1 ELSE 0 END) as threes, 
+          4*SUM(CASE WHEN ball_by_ball.runs_scored=4 THEN 1 ELSE 0 END) as fours, 
+          6*SUM(CASE WHEN ball_by_ball.runs_scored=6 THEN 1 ELSE 0 END) as sixes, 
+          SUM(ball_by_ball.extra_runs) AS extras, COUNT(ball_by_ball.ball_id) as total_balls
         FROM team, ball_by_ball, player_match
         WHERE player_match.match_id=ball_by_ball.match_id AND player_match.player_id=ball_by_ball.striker AND team.team_id=player_match.team_id AND ball_by_ball.match_id=$1 AND ball_by_ball.innings_no=$2
         GROUP BY team.team_name`
@@ -328,7 +333,11 @@ app.get("/player/:player_id/battingstats", async (req, res) => {
 app.get("/player/:player_id/battingcarrer", async (req, res) => {
     try {
         const { player_id } = req.params;
-        const allTodos = await pool.query(`SELECT COUNT(match_id) as matches, SUM(runs) as runs, SUM(four_runs) AS four, SUM(six_runs) AS six, SUM(CASE WHEN runs>=50 THEN 1 ELSE 0 END) as fifty, MAX(runs) AS hs, SUM(runs)*100.0/SUM(balls_faced) AS strike_rate, SUM(runs)*1.0/SUM(outs) AS average
+        const allTodos = await pool.query(`SELECT COUNT(match_id) as matches, SUM(runs) as runs,
+         SUM(four_runs) AS four, SUM(six_runs) AS six,
+          SUM(CASE WHEN runs>=50 THEN 1 ELSE 0 END) as fifty, MAX(runs) AS hs,
+          ROUND(SUM(runs)*100.0/SUM(balls_faced),3) AS strike_rate,
+           ROUND(SUM(runs)*1.0/SUM(outs),3) AS average
         FROM( SELECT ball_by_ball.match_id, SUM(ball_by_ball.runs_scored) as runs, SUM(CASE WHEN ball_by_ball.out_type='NULL' THEN 0 ELSE 1 END ) as outs, SUM(CASE WHEN ball_by_ball.runs_scored=4 THEN 4 ELSE 0 END) as four_runs, SUM(CASE WHEN ball_by_ball.runs_scored=6 THEN 6 ELSE 0 END) as six_runs, COUNT(ball_by_ball.ball_id) as balls_faced
         FROM ball_by_ball
         WHERE ball_by_ball.striker=$1
@@ -359,8 +368,12 @@ app.get("/player/:player_id/bowlingstats", async (req, res) => {
 app.get("/player/:player_id/bowlingcarrer", async (req, res) => {
     try {
         const { player_id } = req.params;
-        const allTodos = await pool.query(`SELECT COUNT(match_id) as matches, SUM(runs_given) as runs, SUM(balls) AS balls, SUM(overs) as overs, SUM(wickets) as wickets, SUM(runs_given)*1.0/SUM(overs) as economy, SUM(CASE WHEN wickets>=5 THEN 1 ELSE 0 END) as five_wickets
-        FROM( SELECT ball_by_ball.match_id, SUM(ball_by_ball.runs_scored+ball_by_ball.extra_runs) as runs_given, SUM(CASE  WHEN ball_by_ball.out_type='caught' OR ball_by_ball.out_type='caught and bowled' OR ball_by_ball.out_type='bowled' OR ball_by_ball.out_type='stumped'  OR ball_by_ball.out_type='keeper catch' OR ball_by_ball.out_type='lbw' OR ball_by_ball.out_type='hit wicket' THEN 1 ELSE 0 END) AS wickets, COUNT(DISTINCT ball_by_ball.over_id) AS overs, COUNT(ball_by_ball.ball_id) AS balls
+        const allTodos = await pool.query(`SELECT COUNT(match_id) as matches, SUM(runs_given) as runs,
+         SUM(balls) AS balls, SUM(overs) as overs, SUM(wickets) as wickets, 
+         ROUND(SUM(runs_given)*1.0/SUM(overs),3) as economy,
+          SUM(CASE WHEN wickets>=5 THEN 1 ELSE 0 END) as five_wickets
+        FROM( SELECT ball_by_ball.match_id, SUM(ball_by_ball.runs_scored+ball_by_ball.extra_runs) as runs_given,
+         SUM(CASE  WHEN ball_by_ball.out_type='caught' OR ball_by_ball.out_type='caught and bowled' OR ball_by_ball.out_type='bowled' OR ball_by_ball.out_type='stumped'  OR ball_by_ball.out_type='keeper catch' OR ball_by_ball.out_type='lbw' OR ball_by_ball.out_type='hit wicket' THEN 1 ELSE 0 END) AS wickets, COUNT(DISTINCT ball_by_ball.over_id) AS overs, COUNT(ball_by_ball.ball_id) AS balls
         FROM ball_by_ball
         WHERE ball_by_ball.bowler=$1
         GROUP BY ball_by_ball.match_id) as match_wickets`
@@ -374,8 +387,10 @@ app.get("/player/:player_id/bowlingcarrer", async (req, res) => {
 app.get("/pointstable/:year", async (req, res) => {
     try {
         const { year } = req.params;
-        const allTodos = await pool.query(`SELECT team.team_name, m3.matches, m3.win, m3.matches-m3.win as lost, i3.nrr,  m3.win*2 as points
-        FROM ( SELECT COALESCE(m1.team1,m2.team2) as team_id, COALESCE(m1.matches,0)+COALESCE(m2.matches,0) as matches, COALESCE(m1.wins,0)+COALESCE(m2.wins,0) as win
+        const allTodos = await pool.query(`SELECT team.team_name, m3.matches, m3.win, m3.matches-m3.win as lost, ROUND(i3.nrr,3) as nrr,
+          m3.win*2 as points
+        FROM ( SELECT COALESCE(m1.team1,m2.team2) as team_id,
+         COALESCE(m1.matches,0)+COALESCE(m2.matches,0) as matches, COALESCE(m1.wins,0)+COALESCE(m2.wins,0) as win
         FROM ( SELECT team1, COUNT(match_winner) AS matches, SUM(CASE WHEN team1=match_winner THEN 1 ELSE 0 END) AS wins 
         FROM match 
         WHERE match.season_year=$1
