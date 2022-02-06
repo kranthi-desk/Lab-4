@@ -122,7 +122,6 @@ function PlayerInfo(){
         // console.log(context);
         let index = context.dataIndex;
         let value = parseInt(context.dataset.data[index]);
-        if(value < 20) return "yellow";
         if(value < 30) return "aqua";
         if(value < 50) return "green";
         return "red";
@@ -151,8 +150,8 @@ function PlayerInfo(){
     const bars = [];
     for (var i=0; i < bowlstats.length; i++) {
         labels1.push(bowlstats[i].match_id);
-        lines.push(bowlstats[i].runs_given);
-        bars.push(bowlstats[i].wickets);
+        lines.push(bowlstats[i].wickets);
+        bars.push(bowlstats[i].runs_given);
     }
 
     const stackdata = {
@@ -161,20 +160,20 @@ function PlayerInfo(){
         datasets: [
         {
             // Label for bars
-            label: 'wickets',
+            label: 'runs',
             // Data or value of your each variable
             data: bars,
             // Color of each bar
-            backgroundColor: "red",
+            backgroundColor: "aqua",
             borderWidth: 0.5,
             type: 'bar'
         },
         {
             // Data or value of your each variable
             data: lines,
-            label: 'runs',
+            label: 'wickets',
             // Color of each bar
-            backgroundColor: "green",
+            backgroundColor: "red",
             borderWidth: 0.5,
             type: 'line',
             stack: 'combined'
@@ -317,9 +316,9 @@ function PlayerInfo(){
                                         <tr>
                                         <td>{item.matches}</td>
                                         <td>{item.runs}</td> 
-                                        <td>{item.balls}</td> 
+                                        <td>{item.wickets}</td> 
                                         <td>{item.overs} </td> 
-                                        <td>{item.wickets} </td> 
+                                        <td>{item.balls} </td> 
                                         <td>{item.economy} </td> 
                                         <td>{item.five_wickets} </td> 
 

@@ -42,6 +42,8 @@ function Pointstable(){
 
         <div>
             <div>
+            <main>
+
             <h1>POINTS TABLE</h1>
 
                 {
@@ -65,6 +67,7 @@ function Pointstable(){
                                     <td>{item.matches}</td> 
                                     <td>{item.win}</td> 
                                     <td>{item.lost} </td> 
+                                    <td>0 </td> 
                                     <td>{item.nrr} </td> 
                                     <td>{item.points} </td> 
                                     </tr>
@@ -73,7 +76,26 @@ function Pointstable(){
                         </tbody>
                     </table>
                 }
+
+            </main>
+            
             </div>
+            <style jsx>{`
+                
+                main{
+					margin: 0 auto;
+                    width: 70%;
+					text-align: center;
+					z-index: 1;
+				}
+                #vspace {
+					height: 50px;
+				}
+            `}</style>
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
         </div>
     )
 }

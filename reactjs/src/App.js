@@ -12,6 +12,8 @@ import PlayerDetails from "./Player_info";
 import Pointstable from "./points_table";
 import VenueDetails from "./VenueDetails";
 import Venues from "./venues";
+import Venue_add from "./Venue_add";
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -23,6 +25,8 @@ export default function App() {
 			  <Route path = "/pointstable/:season_year" element = {<Pointstable/>}/>
 			  <Route path = "/venues/" element = {<Venues/>}/>
 			  <Route path = "/venues/:venue_id" element = {<VenueDetails/>}/>
+			  <Route path = "/venues/add" element = {<Venue_add/>}/>
+
 
 
 		  </Routes>

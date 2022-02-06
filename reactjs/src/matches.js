@@ -51,7 +51,7 @@ class Match extends React.Component {
 					{
 						items.map((item) => (
 						<Button color="primary" className="px-4" style={{margin: '10px'}} >
-						<a className="boxhead" href = {`${item.match_id}`}>
+						<a className="boxhead" href = {`matches/${item.match_id}`}>
 						<div className="boxed" >
 							<h2> {item.team1} vs { item.team2 }</h2>
 							<h3> { item.venue_name }, {item.city_name}</h3>
