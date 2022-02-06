@@ -14,6 +14,7 @@ import VenueDetails from "./VenueDetails";
 import Venues from "./venues";
 import Venue_add from "./Venue_add";
 
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -27,6 +28,7 @@ export default function App() {
 			  <Route path = "/venues/:venue_id" element = {<VenueDetails/>}/>
 			  <Route path = "/venues/add" element = {<Venue_add/>}/>
 
+				
 
 
 		  </Routes>
