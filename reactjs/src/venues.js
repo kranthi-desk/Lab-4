@@ -27,13 +27,14 @@ function Venues(){
 
                 {
                     venues.map((item) => (
-                    <Button color="primary" className="px-4"  >
+                    <Button color="primary" className="px-4" style={{margin: '10px', padding: '10px'}} >
                         <a className="boxhead" href = {`venues/${item.venue_id}`}>
                         <div className="boxed" >
                             <h2> {item.venue_name}</h2>
                         </div>
                         </a>
                     </Button>
+
                     ))
                 }
             </main>
@@ -41,6 +42,10 @@ function Venues(){
             </div>
 
             <style jsx>{`
+
+                #space{
+                    height: 50px;
+                }
 
 				h1{
 					text-align: center;
@@ -61,8 +66,8 @@ function Venues(){
 				}
 		
 				.btn:hover {
-					color: white;
-					background-color: grey;
+					color: black;
+					background-color: skyblue;
 				}
 				`}</style>
         </div>

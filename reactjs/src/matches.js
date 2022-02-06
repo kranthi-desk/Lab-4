@@ -23,13 +23,13 @@ class Match extends React.Component {
 	Incrementpage = async() => {
 		if(this.state.page < 10){
 			await this.setState({ page: this.state.page + 1 });
-			this.componentDidMount()
+			await this.componentDidMount()
 		}
 	}
 	Decreasepage = async() => {
 		if(this.state.page > 1){
 			await this.setState({ page: this.state.page - 1 });
-			this.componentDidMount()
+			await this.componentDidMount()
 		}
 	}
 
@@ -41,13 +41,17 @@ class Match extends React.Component {
 		return (
 			<div>
 				<div >
+					<div>
+						<h1> Matches </h1>
+						<h4> Page {this.state.page} of 10 </h4>
+					</div>
+
 					<main>
-					<h1> Matches </h1> 
-					<h1> Page {this.state.page} of 10 </h1>
+					
 					{
 						items.map((item) => (
-						<Button color="primary" className="px-4"  >
-						<a className="boxhead" href = {`matches/${item.match_id}`}>
+						<Button color="primary" className="px-4" style={{margin: '10px'}} >
+						<a className="boxhead" href = {`${item.match_id}`}>
 						<div className="boxed" >
 							<h2> {item.team1} vs { item.team2 }</h2>
 							<h3> { item.venue_name }, {item.city_name}</h3>
@@ -73,8 +77,15 @@ class Match extends React.Component {
 				</div>
 
 				<style jsx>{`
+				
 
-				h1{
+				// #pagenum{
+				// 	float: right;
+				// 	right: 10px;
+				// 	top: 20px;
+				// }
+
+				h1,h4{
 					text-align: center;
 				}
 
@@ -107,8 +118,8 @@ class Match extends React.Component {
 				}
 		
 				.btn:hover {
-					color: white;
-					background-color: grey;
+					color: black;
+					background-color: skyblue;
 				}
 				`}</style>
 

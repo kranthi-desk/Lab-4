@@ -214,117 +214,152 @@ function PlayerInfo(){
     return(
 
         <div>
-            <div>
-            <h1>PLAYER'S BASIC INFO</h1>
+            <main>
 
-                {
-                    <table class="table table-striped">
-                        <tr  class="bg-info">
-                            <th>Player name</th>
-                            <th>Country name</th>
-                            <th>Batting Hand</th>
-                            <th>Bowling Hand</th>
-                        </tr>
+                <div>
 
-                        <tbody id="myTable">
-                            {   
-                                info.map((item) => (
-                                    <tr>
-                                    <td>{item.player_name}</td>
-                                    <td>{item.country_name}</td> 
-                                    <td>{item.batting_hand}</td> 
-                                    <td>{item.bowling_skill} </td> 
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table>
+                    <h3>PLAYER'S BASIC INFO</h3>
+
+                    {
+                        <table class="table table-striped">
+                            <tr  class="bg-info">
+                                <th>Player name</th>
+                                <th>Country name</th>
+                                <th>Batting Hand</th>
+                                <th>Bowling Hand</th>
+                            </tr>
+
+                            <tbody id="myTable">
+                                {   
+                                    info.map((item) => (
+                                        <tr>
+                                        <td>{item.player_name}</td>
+                                        <td>{item.country_name}</td> 
+                                        <td>{item.batting_hand}</td> 
+                                        <td>{item.bowling_skill} </td> 
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                    }
+
+                </div>
+
+                <div id = "vspace"></div>
+
+                <h3>PLAYER'S BATTING STATISTICS</h3>
+                <div style={{float: "center"}} >
+                    <Bar data = {data} options = { options} />  
+                </div>
+
+                <div id = "vspace"></div>
+
+                <div>
+
+                <h3>PLAYER'S BATTING CAREER</h3>
+
+                    {
+                        <table class="table table-striped">
+                            <tr  class="bg-info">
+                                <th>Matches</th>
+                                <th>Runs</th>
+                                <th>Four</th>
+                                <th>Six</th>
+                                <th>Fifty</th>
+                                <th>HS</th>
+                                <th>Strike Rate</th>
+                                <th>Average</th>
+
+                            </tr>
+
+                            <tbody id="myTable">
+                                {   
+                                    carrer.map((item) => (
+                                        <tr>
+                                        <td>{item.matches}</td>
+                                        <td>{item.runs}</td> 
+                                        <td>{item.four}</td> 
+                                        <td>{item.six} </td> 
+                                        <td>{item.fifty} </td> 
+                                        <td>{item.hs} </td> 
+                                        <td>{item.strike_rate} </td> 
+                                        <td>{item.average} </td> 
+
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+
+                <div id = "vspace"></div>
+
+                <div>
+                    <h3>PLAYER'S BOWLING CAREER</h3>
+                    {
+                        <table class="table table-striped">
+                            <tr  class="bg-info">
+                                <th>Matches</th>
+                                <th>Runs</th>
+                                <th>wickets</th>
+                                <th>overs</th>
+                                <th>balls</th>
+                                <th>Economy</th>
+                                <th>Five Wickets</th>
+
+                            </tr>
+
+                            <tbody id="myTable">
+                                {   
+                                    bowlcarrer.map((item) => (
+                                        <tr>
+                                        <td>{item.matches}</td>
+                                        <td>{item.runs}</td> 
+                                        <td>{item.balls}</td> 
+                                        <td>{item.overs} </td> 
+                                        <td>{item.wickets} </td> 
+                                        <td>{item.economy} </td> 
+                                        <td>{item.five_wickets} </td> 
+
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+
+                <div id = "vspace"></div>
+
+                <h3>PLAYER'S BOWLING STATISTICS</h3>
+                <div style={{float: "center"}} >
+                    <Bar data = {stackdata} options = { options1} />  
+                </div>
+            </main>
+
+            <style jsx>{`
+                h3{
+                    text-align: center;
                 }
-            </div>
-
-            <h1>PLAYER'S BATTING STATISTCS</h1>
-            <div style={{maxWidth: "650px", float: "center"}} >
-                <Bar data = {data} options = { options} />  
-            </div>
-
-            <div>
-
-            <h1>PLAYER'S BATTING CAREER</h1>
-
-                {
-                    <table class="table table-striped">
-                        <tr  class="bg-info">
-                            <th>Matches</th>
-                            <th>Runs</th>
-                            <th>Four</th>
-                            <th>Six</th>
-                            <th>Fifty</th>
-                            <th>HS</th>
-                            <th>Strike Rate</th>
-                            <th>Average</th>
-
-                        </tr>
-
-                        <tbody id="myTable">
-                            {   
-                                carrer.map((item) => (
-                                    <tr>
-                                    <td>{item.matches}</td>
-                                    <td>{item.runs}</td> 
-                                    <td>{item.four}</td> 
-                                    <td>{item.six} </td> 
-                                    <td>{item.fifty} </td> 
-                                    <td>{item.hs} </td> 
-                                    <td>{item.strike_rate} </td> 
-                                    <td>{item.average} </td> 
-
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table>
+                h3{
+                    text-align: center;
                 }
-            </div>
+                main{
+					margin: 0 auto;
+                    width: 70%;
+					text-align: center;
+					z-index: 1;
+				}
+                #vspace {
+					height: 50px;
+				}
+            `}</style>
 
-            <div>
-                <h1>PLAYER'S BOWLING CAREER</h1>
-                {
-                    <table class="table table-striped">
-                        <tr  class="bg-info">
-                            <th>Matches</th>
-                            <th>Runs</th>
-                            <th>wickets</th>
-                            <th>overs</th>
-                            <th>balls</th>
-                            <th>Economy</th>
-                            <th>Five Wickets</th>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-                        </tr>
-
-                        <tbody id="myTable">
-                            {   
-                                bowlcarrer.map((item) => (
-                                    <tr>
-                                    <td>{item.matches}</td>
-                                    <td>{item.runs}</td> 
-                                    <td>{item.balls}</td> 
-                                    <td>{item.overs} </td> 
-                                    <td>{item.wickets} </td> 
-                                    <td>{item.economy} </td> 
-                                    <td>{item.five_wickets} </td> 
-
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table>
-                }
-            </div>
-
-            <h1>PLAYER'S BOWLING STATISTCS</h1>
-            <div style={{maxWidth: "650px", float: "center"}} >
-                <Bar data = {stackdata} options = { options1} />  
-            </div>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
 
         </div>
 

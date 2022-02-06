@@ -109,7 +109,7 @@ function VenueDetails(){
             // Data or value of your each variable
             data: entries,
             // Color of each bar
-            backgroundColor: ['red','green','aqua'],
+            backgroundColor: ['skyblue','red','orange'],
             borderWidth: 0.5,
         },
         ],
@@ -187,53 +187,85 @@ function VenueDetails(){
         details.push(maxchased[i].max);
     }
     return(
-        <div>          
-            <div>
-                <h1>Venue statistics</h1>
-                <h2>Basic Information</h2>
-                {
-                    <table class="table table-striped">
-                        <tr  class="bg-info">
-                            <th>Venue name </th>
-                            <th>Address</th>
-                            <th>Capacity</th>
-                            <th>Total matches played</th>
-                            <th>Highest total recorded</th>
-                            <th>Lowest total recorded</th>
-                            <th>Highest score chased</th>
-                            
-                        </tr>
+        <div>       
+            <main>
+                <div>
+                    <h1>Venue statistics</h1>
+                    <h3>Basic Information</h3>
+                    {
+                        <table class="table table-striped">
+                            <tr  class="bg-info">
+                                <th>Venue name </th>
+                                <th>Address</th>
+                                <th>Capacity</th>
+                                <th>Total matches played</th>
+                                <th>Highest total recorded</th>
+                                <th>Lowest total recorded</th>
+                                <th>Highest score chased</th>
+                                
+                            </tr>
 
-                        <tbody id="myTable">
-                            {   
-                                info.map((item) => (
-                                    <tr>
-                                    <td>{item.venue_name}</td>
-                                    <td>{item.city_name},{item.country_name}</td> 
-                                    <td>{item.capacity}</td> 
-                                    <td>{details[0]}</td> 
-                                    <td>{details[1]}</td> 
-                                    <td>{details[2]}</td> 
-                                    <td>{details[3]}</td> 
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table>
+                            <tbody id="myTable">
+                                {   
+                                    info.map((item) => (
+                                        <tr>
+                                        <td>{item.venue_name}</td>
+                                        <td>{item.city_name},{item.country_name}</td> 
+                                        <td>{item.capacity}</td> 
+                                        <td>{details[0]}</td> 
+                                        <td>{details[1]}</td> 
+                                        <td>{details[2]}</td> 
+                                        <td>{details[3]}</td> 
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                    }
+
+                    <div id = "vspace"></div>
+                    
+                    <h3>Outlines of matches held at this venue</h3>
+
+                    <main>
+                    <div style={{width: '100%', float: 'center'}}>
+                        <Doughnut options = {options} data = {data}/>
+                    </div>
+                    </main>
+
+
+                    <div id = "vspace"></div>
+                    <h3>Average First Innings Score</h3>
+
+
+                    <main>
+                    <div style={{width: '100%', float: 'center'}}>
+                        <Line options = {options1} data = {data1}/>
+                    </div>
+                    </main>
+
+
+
+                </div>
+            </main>
+            <style jsx>{`
+                h3{
+                    text-align: center;
                 }
-                <h2>Outlines of matches held at this venue</h2>
-                <div style={{width: '30%'}}>
-                    <Doughnut options = {options} data = {data}/>
-                </div>
+                main{
+					margin: 0 auto;
+                    width: 70%;
+					text-align: center;
+					z-index: 1;
+				}
+                #vspace {
+					height: 50px;
+				}
+            `}</style>
 
-                <h2>Average First Innings Score</h2>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-                <div style={{width: '40%'}}>
-                    <Line options = {options1} data = {data1}/>
-                </div>
-
-
-            </div>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
         </div>
     )
 }

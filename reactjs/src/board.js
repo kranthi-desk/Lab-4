@@ -91,7 +91,7 @@ function Board(){
         divArray1.push(
             <div>
                 <div id="left">
-                    <a href = {"http://localhost:5000/player/"+batters1[i].player_id+"/info"}>
+                    <a href = {`http://localhost:5000/player/${batters1[i].player_id}/info`}>
                             {batters1[i].player_name}
                     </a> 
                     <mi>
@@ -99,7 +99,7 @@ function Board(){
                     </mi>
                 </div>
                 <div id="right">
-                    <a href = {"http://localhost:5000/player/"+bowlers1[i].player_id+"/info"}>
+                    <a href = {`http://localhost:5000/player/${bowlers1[i].player_id}/info`}>
                             {bowlers1[i].bowler}
                     </a> 
                     <mi>
@@ -116,7 +116,7 @@ function Board(){
         divArray2.push(
             <div>
                 <div id="left">
-                    <a href = {"http://localhost:5000/player/"+batters2[i].player_id+"/info"}>
+                    <a href = {`http://localhost:5000/player/${batters2[{i}].player_id}/info`}>
                             {batters2[i].player_name}
                     </a> 
                     <mi>
@@ -124,7 +124,7 @@ function Board(){
                     </mi>
                 </div>
                 <div id="right">
-                    <a href = {"http://localhost:5000/player/"+bowlers2[i].player_id+"/info"}>
+                    <a href = {`http://localhost:5000/player/${bowlers2[i].player_id}/info`}>
                             {bowlers2[i].bowler}
                     </a> 
                     <mi>
@@ -155,9 +155,10 @@ function Board(){
                         <th>{team1[0].team_name} <r> {runs1[0].sum}-{wickets1[0].sum} </r></th>
                     </tr>
                     <tr>
-                        
                     </tr>
-                    {   
+
+                    
+                    {/* {   
                         <tr>
                             <td>
                                 <div id="container1">
@@ -166,11 +167,13 @@ function Board(){
                             </td>
                         </tr>
                         
-                    }
+                    } */}
                     <tr className="bg-info">
                         <th>{team2[0].team_name} <r> {runs2[0].sum}-{wickets2[0].sum} </r></th>
                     </tr>
-                    {   
+
+
+                    {/* {   
                         <tr>
                             <td>
                                 <div id="container2">
@@ -179,7 +182,7 @@ function Board(){
                             </td>
                         </tr>
                         
-                    }
+                    } */}
                     <tr className="bg-info">
                         <th>{details[0].match_winner} won by {details[0].win_margin} {details[0].win_type}</th>
                     </tr>

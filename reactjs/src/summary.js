@@ -23,7 +23,7 @@ class Summary extends Component {
                   <button onClick={this.props.onHide}>Close</button>
             </div>
             
-            {/* <Board/> */}
+            <Board/>
           </div>
         )}
       </React.Fragment>
