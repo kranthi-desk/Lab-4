@@ -23,19 +23,7 @@ Title,
 Tooltip,
 Legend
 );
-export const options = {
-    responsive: true,
-    maintainAspectRatio: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Chart.js Pie Chart'
-      }
-    }
-  };
+
 
 
 class PieChart extends Component {
@@ -67,33 +55,61 @@ class PieChart extends Component {
     
     render(){
         const { dist1, dist2 } = this.state;
+        const options1 = {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: dist1.team_name
+            }
+          }
+        };
+
         const chartdata1 = {
             labels: ["Extras", "Ones", "Twos", "Threes", "Fours", "Sixes"],
             datasets: [
               {
                 backgroundColor: [
-                  "#83ce83",
-                  "#959595",
-                  "#f96a5d",
-                  "#83ce83",
-                  "#959595",
-                  "#f96a5d",
+                  "magenta",
+                  "#FFD700",
+                  "red",
+                  "black",
+                  "#2eb8b3",
+                  "#32CD32",
                 ],
                 data: [dist1.extras, dist1.ones, dist1.twos, dist1.threes, dist1.fours, dist1.sixes],
               },
             ],
+          };
+
+          const options2 = {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: dist2.team_name
+              }
+            }
           };
           const chartdata2 = {
             labels: ["Extras", "Ones", "Twos", "Threes", "Fours", "Sixes"],
             datasets: [
               {
                 backgroundColor: [
-                  "#83ce83",
-                  "#959595",
-                  "#f96a5d",
-                  "#83ce83",
-                  "#959595",
-                  "#f96a5d",
+                  "magenta",
+                  "#FFD700",
+                  "red",
+                  "black",
+                  "#2eb8b3",
+                  "#32CD32",
                 ],
                 data: [dist2.extras, dist2.ones, dist2.twos, dist2.threes, dist2.fours, dist2.sixes],
               },
@@ -109,12 +125,12 @@ class PieChart extends Component {
                   <div style= {{display: 'flex', justifyContent: 'right'}}>
                     <button onClick={this.props.onHide}>Close</button>
                   </div>
-                    <div className='container'>
-                        <div className='left' style={{width: '40%'}}>
-                            <Pie data={chartdata1} options={options}/>
+                    <div id="container">
+                        <div id="left" style={{width: '50%'}}>
+                            <Pie data={chartdata1} options={options1}/>
                         </div>
-                        <div className='right' style={{width: '40%'}}>
-                            <Pie data={chartdata2} options={options}/>
+                        <div id="right" style={{width: '50%'}}>
+                            <Pie data={chartdata2} options={options2}/>
                         </div>
                     </div>
                 </div>
@@ -122,7 +138,7 @@ class PieChart extends Component {
             </React.Fragment>
 
             <style jsx>{`
-                #container{width:100%;}
+                #container{width:100%;margin-top: 20px;}
                 #left{float:left;}
                 #right{float:right;}
             `}</style>
