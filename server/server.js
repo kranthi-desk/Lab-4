@@ -448,7 +448,7 @@ app.get("/venue/:venue_id/maxmin", async (req, res) => {
         FROM ( SELECT SUM(ball_by_ball.runs_scored+ball_by_ball.extra_runs) as runs
         FROM ball_by_ball, match
         WHERE ball_by_ball.match_id=match.match_id AND match.venue_id=$1
-        GROUP BY ball_by_ball.match_id ) as venue_runs`
+        GROUP BY ball_by_ball.match_id, ball_by_ball.innings_no ) as venue_runs`
         , [venue_id]);
         res.json(allTodos.rows);
     }catch (err) {
@@ -462,7 +462,7 @@ app.get("/venue/:venue_id/maxchased", async (req, res) => {
         const allTodos = await pool.query(`SELECT MAX(runs)
         FROM ( SELECT SUM(ball_by_ball.runs_scored+ball_by_ball.extra_runs) as runs
         FROM ball_by_ball, match
-        WHERE ball_by_ball.match_id=match.match_id AND ball_by_ball.innings_no=2 AND match.win_type='wickets' AND match.venue_id=$1
+        WHERE ball_by_ball.match_id=match.match_id AND ball_by_ball.innings_no=1 AND match.win_type='wickets' AND match.venue_id=$1
         GROUP BY ball_by_ball.match_id, ball_by_ball.innings_no ) as venue_runs`
         , [venue_id]);
         res.json(allTodos.rows);
