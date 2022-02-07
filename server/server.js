@@ -32,7 +32,7 @@ app.get("/matches/:offset/:limit", async (req, res) => {
         const allTodos = await pool.query(`SELECT match.match_id, team1.team_name as team1, team2.team_name as team2, team3.team_name as winner, match.win_type,match.win_margin ,venue.venue_name, venue.city_name
         FROM match, venue, team as team1, team as team2, team as team3
         WHERE match.venue_id=venue.venue_id AND team1.team_id=match.team1 AND team2.team_id=match.team2 AND team3.team_id=match.match_winner
-        ORDER BY match.match_id DESC
+        ORDER BY match.season_year ASC, match_id ASC
         OFFSET $1 LIMIT $2`
         , [offset,limit]);
         res.json(allTodos.rows);
