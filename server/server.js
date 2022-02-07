@@ -392,7 +392,7 @@ app.get("/player/:player_id/bowlingcarrer", async (req, res) => {
 app.get("/pointstable/:year", async (req, res) => {
     try {
         const { year } = req.params;
-        const allTodos = await pool.query(`SELECT team.team_name, m3.matches, m3.win, m3.matches-m3.win as lost, (i3.run1*1.0/i3.ball1)-(i3.run2*1.0/i3.ball2) as nrr,  m3.win*2 as points
+        const allTodos = await pool.query(`SELECT team.team_name, m3.matches, m3.win, m3.matches-m3.win as lost, ROUND((i3.run1*1.0/i3.ball1)-(i3.run2*1.0/i3.ball2),3) as nrr,  m3.win*2 as points
         FROM ( SELECT COALESCE(m1.team1,m2.team2) as team_id, COALESCE(m1.matches,0)+COALESCE(m2.matches,0) as matches, COALESCE(m1.wins,0)+COALESCE(m2.wins,0) as win
         FROM ( SELECT team1, COUNT(match_winner) AS matches, SUM(CASE WHEN team1=match_winner THEN 1 ELSE 0 END) AS wins 
         FROM match 
@@ -448,7 +448,7 @@ app.get("/venue/:venue_id/maxmin", async (req, res) => {
         FROM ( SELECT SUM(ball_by_ball.runs_scored+ball_by_ball.extra_runs) as runs
         FROM ball_by_ball, match
         WHERE ball_by_ball.match_id=match.match_id AND match.venue_id=$1
-        GROUP BY ball_by_ball.match_id, ball_by_ball.innings_no ) as venue_runs`
+        GROUP BY ball_by_ball.match_id, ball_by_ball.innings_no) as venue_runs`
         , [venue_id]);
         res.json(allTodos.rows);
     }catch (err) {
