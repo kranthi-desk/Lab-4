@@ -28,7 +28,7 @@ function Venues(){
                 {
                     venues.map((item) => (
                     <Button color="primary" className="px-4" style={{margin: '10px', padding: '10px'}} >
-                        <a className="boxhead" href = {`${item.venue_id}`}>
+                        <a className="boxhead" href = {`/venues/${item.venue_id}`}>
                         <div className="boxed" >
                             <h2> {item.venue_name}</h2>
                         </div>
