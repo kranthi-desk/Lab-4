@@ -155,7 +155,7 @@ function MatchDetails(){
         divArray1.push(
             <div>
                 <div id="left">
-                    <a href = {`/player/${batters1[i].player_id}`}>
+                    <a href = {`/players/${batters1[i].player_id}`}>
                             {batters1[i].player_name}
                     </a> 
                     <mi>
@@ -163,7 +163,7 @@ function MatchDetails(){
                     </mi>
                 </div>
                 <div id="right">
-                    <a href = {`/player/${bowlers1[i].player_id}`}>
+                    <a href = {`/players/${bowlers1[i].player_id}`}>
                             {bowlers1[i].bowler}
                     </a> 
                     <mi>
@@ -180,7 +180,7 @@ function MatchDetails(){
         divArray2.push(
             <div>
                 <div id="left">
-                    <a href = {`/player/${batters2[i].player_id}`}>
+                    <a href = {`/players/${batters2[i].player_id}`}>
                             {batters2[i].player_name}
                     </a> 
                     <mi>
@@ -188,7 +188,7 @@ function MatchDetails(){
                     </mi>
                 </div>
                 <div id="right">
-                    <a href = {`/player/${bowlers2[i].player_id}`}>
+                    <a href = {`/players/${bowlers2[i].player_id}`}>
                             {bowlers2[i].bowler}
                     </a> 
                     <mi>
