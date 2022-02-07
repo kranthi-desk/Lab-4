@@ -319,11 +319,16 @@ app.get("/player/:player_id/info", async (req, res) => {
 app.get("/player/:player_id/battingstats", async (req, res) => {
     try {
         const { player_id } = req.params;
-        const allTodos = await pool.query(`SELECT ball_by_ball.match_id, match.season_year, SUM(ball_by_ball.runs_scored) as runs, SUM(CASE WHEN ball_by_ball.out_type='NULL' THEN 0 ELSE 1 END ) as outornot
+        const allTodos = await pool.query(`SELECT COALESCE(m1.match_id,m2.match_id) AS match_id, COALESCE(m1.season_year,m2.season_year) AS season_year, COALESCE(m1.runs,0)+COALESCE(m2.runs,0) AS runs, COALESCE(m1.outornot,0)+COALESCE(m2.outornot,0) AS outornot
+        FROM ( SELECT ball_by_ball.match_id, match.season_year, SUM(ball_by_ball.runs_scored) as runs, SUM(CASE WHEN ball_by_ball.out_type='NULL' THEN 0 ELSE 1 END ) as outornot
         FROM ball_by_ball, match
         WHERE ball_by_ball.match_id=match.match_id AND ball_by_ball.striker=$1
-        GROUP BY ball_by_ball.match_id, match.season_year
-        ORDER BY ball_by_ball.match_id, match.season_year`
+        GROUP BY ball_by_ball.match_id, match.season_year ) as m1 FULL OUTER JOIN ( SELECT ball_by_ball.match_id, match.season_year, 0 as runs, 0 as outornot
+        FROM ball_by_ball, match
+        WHERE ball_by_ball.match_id=match.match_id AND ball_by_ball.non_striker=$1
+        GROUP BY ball_by_ball.match_id, match.season_year ) as m2
+        ON m1.match_id=m2.match_id
+        ORDER BY COALESCE(m1.match_id,m2.match_id), COALESCE(m1.season_year,m2.season_year)`
         , [player_id]);
         res.json(allTodos.rows);
     }catch (err) {
