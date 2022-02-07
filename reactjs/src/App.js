@@ -30,7 +30,7 @@ export default function App() {
 			  <Route exact path = "/players/:player_id" element = {<PlayerDetails/>}/>
 			  <Route exact path = "/pointstable/:season_year" element = {<Pointstable/>}/>
 			  <Route exact path = "/venues/" element = {<Venues/>}/>
-			  <Route exact path = "/venues/:venue_id" element = {<VenueDetails/>}/>
+			  <Route exact path = "/venue/:venue_id" element = {<VenueDetails/>}/>
 			  <Route exact path = "/venues/add" element = {<Venue_add/>}/>
 			  <Route exact path = "/" element = {<Home/>}/>
 
