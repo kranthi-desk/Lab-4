@@ -75,7 +75,7 @@ app.get("/match/:match_id/bowling/:innings", async (req, res) => {
         const { match_id,innings } = req.params;
         const allTodos = await pool.query(`SELECT player.player_id, player.player_name as bowler,
         COUNT(ball_by_ball.ball_id)/6 as overs_bowled,COUNT(ball_by_ball.ball_id) as balls_bowled,
-         SUM(ball_by_ball.runs_scored+ball_by_ball.extra_runs) AS runs_given,
+         SUM(ball_by_ball.runs_scored) AS runs_given,
         SUM(CASE  WHEN ball_by_ball.out_type='caught' OR ball_by_ball.out_type='caught and bowled' OR ball_by_ball.out_type='bowled' OR ball_by_ball.out_type='stumped'  OR ball_by_ball.out_type='keeper catch' OR ball_by_ball.out_type='lbw' OR ball_by_ball.out_type='hit wicket' THEN 1 ELSE 0 END) AS wickets
         FROM player, ball_by_ball
         WHERE player.player_id=ball_by_ball.bowler AND ball_by_ball.match_id=$1 AND ball_by_ball.innings_no=$2
@@ -357,7 +357,7 @@ app.get("/player/:player_id/battingcarrer", async (req, res) => {
 app.get("/player/:player_id/bowlingstats", async (req, res) => {
     try {
         const { player_id } = req.params;
-        const allTodos = await pool.query(`SELECT ball_by_ball.match_id, match.season_year, SUM(ball_by_ball.runs_scored+ball_by_ball.extra_runs) as runs_given, SUM(CASE  WHEN ball_by_ball.out_type='caught' OR ball_by_ball.out_type='caught and bowled' OR ball_by_ball.out_type='bowled' OR ball_by_ball.out_type='stumped'  OR ball_by_ball.out_type='keeper catch' OR ball_by_ball.out_type='lbw' OR ball_by_ball.out_type='hit wicket' THEN 1 ELSE 0 END) AS wickets
+        const allTodos = await pool.query(`SELECT ball_by_ball.match_id, match.season_year, SUM(ball_by_ball.runs_scored) as runs_given, SUM(CASE  WHEN ball_by_ball.out_type='caught' OR ball_by_ball.out_type='caught and bowled' OR ball_by_ball.out_type='bowled' OR ball_by_ball.out_type='stumped'  OR ball_by_ball.out_type='keeper catch' OR ball_by_ball.out_type='lbw' OR ball_by_ball.out_type='hit wicket' THEN 1 ELSE 0 END) AS wickets
         FROM ball_by_ball, match
         WHERE ball_by_ball.match_id=match.match_id AND ball_by_ball.bowler=$1
         GROUP BY ball_by_ball.match_id, match.season_year
@@ -377,7 +377,7 @@ app.get("/player/:player_id/bowlingcarrer", async (req, res) => {
          SUM(balls) AS balls, SUM(overs) as overs, SUM(wickets) as wickets, 
          ROUND(SUM(runs_given)*1.0/SUM(overs),3) as economy,
           SUM(CASE WHEN wickets>=5 THEN 1 ELSE 0 END) as five_wickets
-        FROM( SELECT ball_by_ball.match_id, SUM(ball_by_ball.runs_scored+ball_by_ball.extra_runs) as runs_given,
+        FROM( SELECT ball_by_ball.match_id, SUM(ball_by_ball.runs_scored) as runs_given,
          SUM(CASE  WHEN ball_by_ball.out_type='caught' OR ball_by_ball.out_type='caught and bowled' OR ball_by_ball.out_type='bowled' OR ball_by_ball.out_type='stumped'  OR ball_by_ball.out_type='keeper catch' OR ball_by_ball.out_type='lbw' OR ball_by_ball.out_type='hit wicket' THEN 1 ELSE 0 END) AS wickets, COUNT(DISTINCT ball_by_ball.over_id) AS overs, COUNT(ball_by_ball.ball_id) AS balls
         FROM ball_by_ball
         WHERE ball_by_ball.bowler=$1
