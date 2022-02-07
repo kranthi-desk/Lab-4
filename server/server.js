@@ -444,7 +444,7 @@ app.get("/venue/:venue_id/info", async (req, res) => {
 app.get("/venue/:venue_id/maxmin", async (req, res) => {
     try {
         const { venue_id } = req.params;
-        const allTodos = await pool.query(`SELECT COUNT(runs) as matches, MAX(runs), MIN(runs)
+        const allTodos = await pool.query(`SELECT ((COUNT(runs)-1)/2)+1 as matches, MAX(runs), MIN(runs)
         FROM ( SELECT SUM(ball_by_ball.runs_scored+ball_by_ball.extra_runs) as runs
         FROM ball_by_ball, match
         WHERE ball_by_ball.match_id=match.match_id AND match.venue_id=$1
