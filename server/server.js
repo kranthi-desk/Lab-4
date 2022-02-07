@@ -74,7 +74,7 @@ app.get("/match/:match_id/bowling/:innings", async (req, res) => {
     try {
         const { match_id,innings } = req.params;
         const allTodos = await pool.query(`SELECT player.player_id, player.player_name as bowler,
-        COUNT(ball_by_ball.ball_id)/6 as overs_bowled,COUNT(ball_by_ball.ball_id)%6 as balls_bowled,
+        COUNT(ball_by_ball.ball_id)/6 as overs_bowled,COUNT(ball_by_ball.ball_id) as balls_bowled,
          SUM(ball_by_ball.runs_scored+ball_by_ball.extra_runs) AS runs_given,
         SUM(CASE  WHEN ball_by_ball.out_type='caught' OR ball_by_ball.out_type='caught and bowled' OR ball_by_ball.out_type='bowled' OR ball_by_ball.out_type='stumped'  OR ball_by_ball.out_type='keeper catch' OR ball_by_ball.out_type='lbw' OR ball_by_ball.out_type='hit wicket' THEN 1 ELSE 0 END) AS wickets
         FROM player, ball_by_ball
