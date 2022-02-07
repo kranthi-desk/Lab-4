@@ -13,7 +13,7 @@ import Pointstable from "./points_table";
 import VenueDetails from "./VenueDetails";
 import Venues from "./venues";
 import Venue_add from "./Venue_add";
-
+import Home from "./index";
 
 export default function App() {
   return (
@@ -32,6 +32,7 @@ export default function App() {
 			  <Route exact path = "/venues/" element = {<Venues/>}/>
 			  <Route exact path = "/venues/:venue_id" element = {<VenueDetails/>}/>
 			  <Route exact path = "/venues/add" element = {<Venue_add/>}/>
+			  <Route exact path = "/" element = {<Home/>}/>
 
 				
 
