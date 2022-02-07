@@ -167,7 +167,7 @@ function MatchDetails(){
                             {bowlers1[i].bowler}
                     </a> 
                     <mi>
-                        <b>{bowlers1[i].wickets}-{bowlers1[i].runs_given}</b> {bowlers1[i].overs_bowled}.{bowlers1[i].balls_bowled}
+                        <b>{bowlers1[i].wickets}-{bowlers1[i].runs_given}</b> {bowlers1[i].overs_bowled}.{parseInt(bowlers1[i].balls_bowled)%6}
                     </mi>
                 </div>
             </div>
@@ -192,7 +192,7 @@ function MatchDetails(){
                             {bowlers2[i].bowler}
                     </a> 
                     <mi>
-                        <b>{bowlers2[i].wickets}-{bowlers2[i].runs_given}</b> {bowlers2[i].overs_bowled}.{bowlers2[i].balls_bowled}
+                        <b>{bowlers2[i].wickets}-{bowlers2[i].runs_given}</b> {bowlers2[i].overs_bowled}.{parseInt(bowlers2[i].balls_bowled)%6}
                     </mi>
                 </div>
             </div>
