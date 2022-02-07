@@ -79,7 +79,7 @@ app.get("/match/:match_id/bowling/:innings", async (req, res) => {
         SUM(CASE  WHEN ball_by_ball.out_type='caught' OR ball_by_ball.out_type='caught and bowled' OR ball_by_ball.out_type='bowled' OR ball_by_ball.out_type='stumped'  OR ball_by_ball.out_type='keeper catch' OR ball_by_ball.out_type='lbw' OR ball_by_ball.out_type='hit wicket' THEN 1 ELSE 0 END) AS wickets
         FROM player, ball_by_ball
         WHERE player.player_id=ball_by_ball.bowler AND ball_by_ball.match_id=$1 AND ball_by_ball.innings_no=$2
-        GROUP BY (player.player_id,match_innings_no)`
+        GROUP BY player.player_id`
         , [match_id,innings]);
         res.json(allTodos.rows);
     }catch (err) {
