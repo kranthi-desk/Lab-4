@@ -249,7 +249,7 @@ app.get("/match/:match_id/bowl/:innings", async (req, res) => {
         FROM player, ball_by_ball
         WHERE ball_by_ball.bowler=player.player_id AND ball_by_ball.match_id=$1 AND ball_by_ball.innings_no=$2 
         GROUP BY player_id
-        ORDER BY SUM(CASE  WHEN ball_by_ball.out_type='caught' OR ball_by_ball.out_type='caught and bowled' OR ball_by_ball.out_type='bowled' OR ball_by_ball.out_type='stumped'  OR ball_by_ball.out_type='keeper catch' OR ball_by_ball.out_type='lbw' OR ball_by_ball.out_type='hit wicket' THEN 1 ELSE 0 END) DESC, SUM(ball_by_ball.runs_scored+ball_by_ball.extra_runs), player.player_name ) AS i
+        ORDER BY SUM(CASE  WHEN ball_by_ball.out_type='caught' OR ball_by_ball.out_type='caught and bowled' OR ball_by_ball.out_type='bowled' OR ball_by_ball.out_type='stumped'  OR ball_by_ball.out_type='keeper catch' OR ball_by_ball.out_type='lbw' OR ball_by_ball.out_type='hit wicket' THEN 1 ELSE 0 END) DESC, SUM(ball_by_ball.runs_scored), player.player_name ) AS i
         WHERE i.wickets<>0
         LIMIT 3`
             , [match_id, innings]);
