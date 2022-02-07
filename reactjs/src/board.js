@@ -23,7 +23,7 @@ function Board(){
     const [wickets1, setWickets1] = useState([]);
     const [wickets2, setWickets2] = useState([]);
     const [details, setDetails] = useState([]);
-
+    const DataisLoaded = false;
 
 
 
@@ -34,55 +34,56 @@ function Board(){
     }
 
 
-    useEffect(() => {
+    useEffect(async () => {
         const api1 = `http://localhost:5000/match/${match_id}/team/1`;
-        fetchdata(api1).then(data => {
+        await fetchdata(api1).then(data => {
             setTeam1(data)
         })
         const api2 = `http://localhost:5000/match/${match_id}/team/2`;
-        fetchdata(api2).then(data => {
+        await fetchdata(api2).then(data => {
             setTeam2(data)
         })
         const api3 = `http://localhost:5000/match/${match_id}/seasonyear`;
-        fetchdata(api3).then(data => {
+        await fetchdata(api3).then(data => {
             setSeason_year(data)
         })
         const api4 = `http://localhost:5000/match/${match_id}/bat/1`;
-        fetchdata(api4).then(data => {
+        await fetchdata(api4).then(data => {
             setBatters1(data)
         })
         const api5 = `http://localhost:5000/match/${match_id}/bat/2`;
-        fetchdata(api5).then(data => {
+        await fetchdata(api5).then(data => {
             setBatters2(data)
         })
         const api6 = `http://localhost:5000/match/${match_id}/bowling/1`;
-        fetchdata(api6).then(data => {
+        await fetchdata(api6).then(data => {
             setBowlers1(data)
         })
         const api7 = `http://localhost:5000/match/${match_id}/bowling/2`;
-        fetchdata(api7).then(data => {
+        await fetchdata(api7).then(data => {
             setBowlers2(data)
         })
         const api8 = `http://localhost:5000/match/${match_id}/runs/1`;
-        fetchdata(api8).then(data => {
+        await fetchdata(api8).then(data => {
             setRuns1(data)
         })
         const api9 = `http://localhost:5000/match/${match_id}/wickets/1`;
-        fetchdata(api9).then(data => {
+        await fetchdata(api9).then(data => {
             setWickets1(data)
         })
         const api10 = `http://localhost:5000/match/${match_id}/runs/2`;
-        fetchdata(api10).then(data => {
+        await fetchdata(api10).then(data => {
             setRuns2(data)
         })
         const api11 = `http://localhost:5000/match/${match_id}/wickets/2`;
-        fetchdata(api11).then(data => {
+        await fetchdata(api11).then(data => {
             setWickets2(data)
         })
         const api12 = `http://localhost:5000/match/${match_id}/details`;
-        fetchdata(api12).then(data => {
+        await fetchdata(api12).then(data => {
             setDetails(data)
         })
+        DataisLoaded = true;
     }, [])
 
     var divs = document.getElementById('container1');
@@ -91,7 +92,7 @@ function Board(){
         divArray1.push(
             <div>
                 <div id="left">
-                    <a href = {`http://localhost:5000/player/${batters1[i].player_id}/info`}>
+                    <a href = {`player/${batters1[i].player_id}/info`}>
                             {batters1[i].player_name}
                     </a> 
                     <mi>
@@ -99,7 +100,7 @@ function Board(){
                     </mi>
                 </div>
                 <div id="right">
-                    <a href = {`http://localhost:5000/player/${bowlers1[i].player_id}/info`}>
+                    <a href = {`player/${bowlers1[i].player_id}/info`}>
                             {bowlers1[i].bowler}
                     </a> 
                     <mi>
@@ -110,33 +111,43 @@ function Board(){
         );
     }
 
-    var divs = document.getElementById('container2');
-    var divArray2 = [];
-    for (var i = 0; i < 3; i += 1) {
-        divArray2.push(
+    // var divs = document.getElementById('container2');
+    // var divArray2 = [];
+    // for (var i = 0; i < 3; i += 1) {
+    //     divArray2.push(
+    //         <div>
+    //             <div id="left">
+    //                 <a href = {`http://localhost:5000/player/${batters2[{i}].player_id}/info`}>
+    //                         {batters2[i].player_name}
+    //                 </a> 
+    //                 <mi>
+    //                     <b>{batters2[i].runs}</b>&nbsp;&nbsp;{batters2[i].balls}
+    //                 </mi>
+    //             </div>
+    //             <div id="right">
+    //                 <a href = {`http://localhost:5000/player/${bowlers2[i].player_id}/info`}>
+    //                         {bowlers2[i].bowler}
+    //                 </a> 
+    //                 <mi>
+    //                     <b>{bowlers2[i].wickets}-{bowlers2[i].runs_given}</b> {bowlers2[i].overs_bowled}.{bowlers2[i].balls_bowled}
+    //                 </mi>
+    //             </div>
+    //         </div>
+    //     );
+    // }
+    if (!DataisLoaded) {
+        console.log("jj");
+        return( 
             <div>
-                <div id="left">
-                    <a href = {`http://localhost:5000/player/${batters2[{i}].player_id}/info`}>
-                            {batters2[i].player_name}
-                    </a> 
-                    <mi>
-                        <b>{batters2[i].runs}</b>&nbsp;&nbsp;{batters2[i].balls}
-                    </mi>
-                </div>
-                <div id="right">
-                    <a href = {`http://localhost:5000/player/${bowlers2[i].player_id}/info`}>
-                            {bowlers2[i].bowler}
-                    </a> 
-                    <mi>
-                        <b>{bowlers2[i].wickets}-{bowlers2[i].runs_given}</b> {bowlers2[i].overs_bowled}.{bowlers2[i].balls_bowled}
-                    </mi>
-                </div>
+            <h1> Loading.... </h1> 
             </div>
-        );
+        )
     }
 
     return (
+		
         <div>
+            
             {/* <div >
                 {divArray1}
             </div> */}
@@ -154,11 +165,10 @@ function Board(){
                     <tr className="bg-info">
                         <th>{team1[0].team_name} <r> {runs1[0].sum}-{wickets1[0].sum} </r></th>
                     </tr>
-                    <tr>
-                    </tr>
+                   
 
                     
-                    {/* {   
+                    {   
                         <tr>
                             <td>
                                 <div id="container1">
@@ -167,7 +177,9 @@ function Board(){
                             </td>
                         </tr>
                         
-                    } */}
+                    }
+
+                    
                     <tr className="bg-info">
                         <th>{team2[0].team_name} <r> {runs2[0].sum}-{wickets2[0].sum} </r></th>
                     </tr>

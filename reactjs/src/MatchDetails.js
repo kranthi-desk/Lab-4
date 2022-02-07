@@ -18,9 +18,11 @@ function MatchDetails(){
         const json = await res.json();
         return json
     }
-    const [team1, setTeam1] = useState([]);
-    const [team2, setTeam2] = useState([]);
-    const [info, setInfo] = useState([]);
+
+    
+    const [team1, setTeam1] = useState([{}]);
+    const [team2, setTeam2] = useState([{}]);
+    const [info, setInfo] = useState([{}]);
     const [umpires, setUmpires] = useState([]);
     const [venue, setVenue] = useState([]);
     const [team1xi, setTeam1xi] = useState([]);
@@ -32,6 +34,17 @@ function MatchDetails(){
     const [bowling1, setBowling1] = useState([]);
     const [batting2, setBatting2] = useState([]);
     const [bowling2, setBowling2] = useState([]);
+    const [season_year, setSeason_year] = useState([{}]);
+    const [batters1, setBatters1] = useState([{},{},{}]);
+    const [batters2, setBatters2] = useState([{},{},{}]);
+    const [bowlers1, setBowlers1] = useState([{},{},{}]);
+    const [bowlers2, setBowlers2] = useState([{},{},{}]);
+    const [runs1, setRuns1] = useState([]);
+    const [runs2, setRuns2] = useState([]);
+    const [wickets1, setWickets1] = useState([]);
+    const [wickets2, setWickets2] = useState([]);
+    const [details, setDetails] = useState([{}]);
+
 
     const [state, setState] = useState({showChart: 0});
 
@@ -89,11 +102,102 @@ function MatchDetails(){
         fetchdata(api10).then(data => {
             setTeam2xi(data)
         })
+
         const api11 = `http://localhost:5000/match/${match_id}/venue`;
         fetchdata(api11).then(data => {
             setVenue(data)
         })
+        const api14= `http://localhost:5000/match/${match_id}/seasonyear`;
+        fetchdata(api14).then(data => {
+            setSeason_year(data)
+        })
+        const api15 = `http://localhost:5000/match/${match_id}/bat/1`;
+        fetchdata(api15).then(data => {
+            setBatters1(data)
+        })
+        const api16 = `http://localhost:5000/match/${match_id}/bat/2`;
+        fetchdata(api16).then(data => {
+            setBatters2(data)
+        })
+        const api17 = `http://localhost:5000/match/${match_id}/bowling/1`;
+        fetchdata(api17).then(data => {
+            setBowlers1(data)
+        })
+        const api18 = `http://localhost:5000/match/${match_id}/bowling/2`;
+        fetchdata(api18).then(data => {
+            setBowlers2(data)
+        })
+        const api19 = `http://localhost:5000/match/${match_id}/runs/1`;
+        fetchdata(api19).then(data => {
+            setRuns1(data)
+        })
+        const api20 = `http://localhost:5000/match/${match_id}/wickets/1`;
+        fetchdata(api20).then(data => {
+            setWickets1(data)
+        })
+        const api21 = `http://localhost:5000/match/${match_id}/runs/2`;
+        fetchdata(api21).then(data => {
+            setRuns2(data)
+        })
+        const api22 = `http://localhost:5000/match/${match_id}/wickets/2`;
+        fetchdata(api22).then(data => {
+            setWickets2(data)
+        })
+        const api23 = `http://localhost:5000/match/${match_id}/details`;
+        fetchdata(api23).then(data => {
+            setDetails(data)
+        })
     }, [])
+
+
+    var divArray1 = [];
+    for (var i = 0; i < 3; i += 1) {
+        divArray1.push(
+            <div>
+                <div id="left">
+                    <a href = {`player/${batters1[i].player_id}/info`}>
+                            {batters1[i].player_name}
+                    </a> 
+                    <mi>
+                        <b>{batters1[i].runs}</b>&nbsp;&nbsp;{batters1[i].balls}
+                    </mi>
+                </div>
+                <div id="right">
+                    <a href = {`player/${bowlers1[i].player_id}/info`}>
+                            {bowlers1[i].bowler}
+                    </a> 
+                    <mi>
+                        <b>{bowlers1[i].wickets}-{bowlers1[i].runs_given}</b> {bowlers1[i].overs_bowled}.{bowlers1[i].balls_bowled}
+                    </mi>
+                </div>
+            </div>
+        );
+    }
+
+    var divs = document.getElementById('container2');
+    var divArray2 = [];
+    for (var i = 0; i < 3; i += 1) {
+        divArray2.push(
+            <div>
+                <div id="left">
+                    <a href = {`player/${batters2[i].player_id}/info`}>
+                            {batters2[i].player_name}
+                    </a> 
+                    <mi>
+                        <b>{batters2[i].runs}</b>&nbsp;&nbsp;{batters2[i].balls}
+                    </mi>
+                </div>
+                <div id="right">
+                    <a href = {`player/${bowlers2[i].player_id}/info`}>
+                            {bowlers2[i].bowler}
+                    </a> 
+                    <mi>
+                        <b>{bowlers2[i].wickets}-{bowlers2[i].runs_given}</b> {bowlers2[i].overs_bowled}.{bowlers2[i].balls_bowled}
+                    </mi>
+                </div>
+            </div>
+        );
+    }
 
     
 
@@ -108,10 +212,7 @@ function MatchDetails(){
                     <Button onClick={() => getChart("d")}>
                     Score Comparison
                     </Button>
-                    &nbsp;&nbsp;
-                    <Button onClick={() => getChart("s")}>
-                    Match Summary
-                    </Button>
+                    
                     &nbsp;&nbsp;
                     <Button onClick={() => getChart("p")}>
                     Pie Chart
@@ -172,6 +273,8 @@ function MatchDetails(){
                             </h4>
                         ))
                     }
+
+
                     <table class="table table-striped">
                         <tr  class="bg-info">
                             <th>Bowler</th>
@@ -197,11 +300,9 @@ function MatchDetails(){
                         <h2>Second Innings</h2>
                     </main>
                     {
-                        team2.map((item) => (
                             <h4>
-                                Batting({item.team_name})
+                                Batting({team2[0].team_name})
                             </h4>
-                        ))
                     }   
                     
                     <table class="table table-striped">
@@ -255,6 +356,59 @@ function MatchDetails(){
                             }
                         </tbody>
                     </table>
+
+                    <div id = 'vspace'></div>
+
+                
+                    <table class="table table-striped">
+                        
+                        <tr className="bg-info">
+                            {/* <Text style={styles.italic}></Text> */}
+                            <th><l><h5><b>MATCH SUMMARY</b></h5></l></th>
+                            {/* <th>{match_id}, IPL {season_year.map((item) => item.season_year)}</th> */}
+                        </tr>
+                        <tr className="bg-info">
+                            <th><l>{match_id}, IPL {season_year.map((item) => item.season_year)}</l></th>
+                        </tr>
+                        <tr className="bg-info">
+                            <th><l>{team1.map((team) => team.team_name)}</l> <r>{runs1.map((item) => item.sum)}-{wickets1.map((item) => item.sum)} </r></th>
+                        </tr>
+
+                        {   
+                            <tr>
+                                <td>
+                                    <div id="container1">
+                                        {divArray1}
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                        }
+
+                    
+                        <tr className="bg-info">
+                            <th><l>{team2.map((team) => team.team_name)}</l> <r>{runs2.map((item) => item.sum)}-{wickets2.map((item) => item.sum)} </r></th>
+                        </tr>
+
+
+                        {   
+                            <tr>
+                                <td>
+                                    <div id="container2">
+                                        {divArray2}
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                        }
+
+                        <tr className="bg-info">
+                            <th>{details[0].match_winner} won by {details[0].win_margin} {details[0].win_type}</th>
+                        </tr>
+                    </table>
+
+
+
                     <h1> Match-Info </h1>
                     {
                         info.map((item) => (
@@ -326,6 +480,24 @@ function MatchDetails(){
 					right: 100px;
 					top: 9px;
 				}
+                #container{width:100%;}
+                #left{float:left;width:50%;}
+                #right{float:right;width:50%;}
+                mi{
+                    float: right;
+                    margin-right: 50px;
+                }
+                r {
+                    float: right;
+                    margin-right: 50px;
+                }
+                l {
+                    float: left;
+                    margin-left: 50px;
+                }
+                #vspace{
+                    height: 20px;
+                }
             `}</style>
             
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

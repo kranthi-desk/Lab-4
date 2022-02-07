@@ -17,16 +17,21 @@ import Venue_add from "./Venue_add";
 
 export default function App() {
   return (
+
+	
     <BrowserRouter>
 		<div>
+		{/* <div>
+			<button>Hi</button>
+		</div> */}
 		  <Routes>
-			  <Route path = "/matches/" element = {<Match/>}/>
-			  <Route path = "/matches/:match_id" element = {<MatchDetails/>}/>
-			  <Route path = "/players/:player_id" element = {<PlayerDetails/>}/>
-			  <Route path = "/pointstable/:season_year" element = {<Pointstable/>}/>
-			  <Route path = "/venues/" element = {<Venues/>}/>
-			  <Route path = "/venues/:venue_id" element = {<VenueDetails/>}/>
-			  <Route path = "/venues/add" element = {<Venue_add/>}/>
+			  <Route exact path = "/matches/" element = {<Match/>}/>
+			  <Route exact path = "/matches/:match_id" element = {<MatchDetails/>}/>
+			  <Route exact path = "/players/:player_id" element = {<PlayerDetails/>}/>
+			  <Route exact path = "/pointstable/:season_year" element = {<Pointstable/>}/>
+			  <Route exact path = "/venues/" element = {<Venues/>}/>
+			  <Route exact path = "/venues/:venue_id" element = {<VenueDetails/>}/>
+			  <Route exact path = "/venues/add" element = {<Venue_add/>}/>
 
 				
 
