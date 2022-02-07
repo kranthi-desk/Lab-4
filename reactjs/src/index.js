@@ -10,7 +10,7 @@ export default function Home() {
       <div id = 'main'>
         <h1>IPL CRIC INFO</h1>
         <mi>
-        <a className="boxhead" href = {`venues/add`}>
+        <a className="boxhead" href = {`/venues/add`}>
         <button style={{height: '60px',width: '220px'}}>
         <div >
             <h2> {"Add venue >"}</h2>
@@ -21,7 +21,7 @@ export default function Home() {
 
 
         <br></br>
-        <a className="boxhead" href = {`venues/`}>
+        <a className="boxhead" href = {`/venues/`}>
         <button style={{height: '60px',width: '220px'}}>
         <div  >
             <h2> {"Venues >"} </h2>
@@ -37,7 +37,7 @@ export default function Home() {
         <div id = 'vspace'></div>
 
 
-        <a className="boxhead" href = {`matches/`}>
+        <a className="boxhead" href = {`/matches/`}>
         <button style={{height: '60px',width: '220px'}}>
         <div >
             <h2> {"Matches >"} </h2>
@@ -48,7 +48,7 @@ export default function Home() {
 
         <br></br>
 
-        <a className="boxhead" href = {`pointstable/2011`}>
+        <a className="boxhead" href = {`/pointstable/2011`}>
         <button style={{height: '60px',width: '220px'}}>
         <div  >
             <h2> {"Points table 2011 >"} </h2>
@@ -61,7 +61,7 @@ export default function Home() {
 
 
         <div id = 'vspace'></div>
-        <a className="boxhead" href = {`pointstable/2013`}>
+        <a className="boxhead" href = {`/pointstable/2013`}>
         <button style={{height: '60px',width: '220px'}}>
         <div >
             <h2> {"Points table 2013 >"}</h2>
@@ -72,7 +72,7 @@ export default function Home() {
         
         <div id = 'vspace'></div>
 
-        <a className="boxhead" href = {`pointstable/2015`}>
+        <a className="boxhead" href = {`/pointstable/2015`}>
         <button style={{height: '60px',width: '220px'}}>
         <div  >
             <h2> {"Points table 2015 >"}</h2>
@@ -84,7 +84,7 @@ export default function Home() {
 
         <div id = 'vspace'></div>
 
-        <a className="boxhead" href = {`pointstable/2017`}>
+        <a className="boxhead" href = {`/pointstable/2017`}>
         <button style={{height: '60px',width: '220px'}}>
         <div  >
             <h2> {"Points table 2017 >"}</h2>
@@ -96,7 +96,7 @@ export default function Home() {
 
         <div id = 'vspace'></div>
 
-        {/* <a className="boxhead" href = {`pointstable/2017`}>
+        {/* <a className="boxhead" href = {`/pointstable/2017`}>
         <button style={{height: '60px',width: '220px'}}>
         <div >
             <h2> {"Points table 2017 >"} </h2>
