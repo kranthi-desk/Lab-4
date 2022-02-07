@@ -98,9 +98,19 @@ class Venue_add extends React.Component {
     render(){
       return (
         <div>        	
+          <div id = 'vspace'></div>
+          <div id = 'vspace'></div>
+
           <form name="contactform" className="contactform" onSubmit= {this.contactSubmit.bind(this)}>
+            
             <div id="main">
+
+              <h1>Add a new venue</h1>
+              
+
               <fieldset>
+                <div id = 'vspace'></div>
+                <div id = 'vspace'></div>
                   <label>
                     VENUE NAME: <input type="text" size="30"  onChange={this.handleChange.bind(this, "venue_name")} value={this.state.fields["venue_name"]}/>
                     <span className="error">{this.state.errors["venue_name"]}</span>
@@ -129,21 +139,37 @@ class Venue_add extends React.Component {
                     <span className="error">{this.state.errors["capacity"]}</span>
                     <br/>
                 </label>    
-                
+                <div id = 'vspace'></div>
+            
+                <button className="btn info" id="submit" value="Submit">Add Venue</button>
+                <br/>
+                <br/>
               </fieldset>
+              <div id = "vspace"></div>
+
+                
+
+                
             </div>
             
-            <div id = 'main'>
-              {/* <fieldset> */}
-                <button className="btn info" id="submit" value="Submit">Add Venue</button>
-              {/* </fieldset> */}
-            </div>
           </form>
+
+          <div id = 'main'>
+
+          <button className="btn info" >
+            <a href = '/venues/' className='home'>
+              Home
+            </a>
+          </button>
+          </div>
 
 
           <style jsx>{`
               h3{
                   text-align: center;
+              }
+              .home{
+                text-decoration: none;
               }
               #main{
                 padding: 20px;

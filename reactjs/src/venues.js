@@ -22,13 +22,32 @@ function Venues(){
 
         <div>
             <div>
-            <h1> Venues </h1> 
-            <main>
+            <div id = 'container'>
+            {/* <div id = 'space' ></div> */}
+                <h1> Venues </h1> 
+                <div id = 'right'>
+                    <a className="boxhead" href = {`add`}>
 
+                    <button style={{height: '70px'}}>
+
+                    <div className="addvenue" >
+                        <h2> Add venue</h2>
+                    </div>
+                    
+                    
+                    </button>
+                    </a>
+                </div>
+            </div>
+
+            <div id = 'space' ></div>
+            
+
+            <main>
                 {
                     venues.map((item) => (
                     <Button color="primary" className="px-4" style={{margin: '10px', padding: '10px'}} >
-                        <a className="boxhead" href = {`/venues/${item.venue_id}`}>
+                        <a className="boxhead" href = {`venues/${item.venue_id}`}>
                         <div className="boxed" >
                             <h2> {item.venue_name}</h2>
                         </div>
@@ -42,9 +61,15 @@ function Venues(){
             </div>
 
             <style jsx>{`
+                #right {
+                    position: absolute;
+                    right: 100px;
+                    top: 10px;
+                    // right: 100px;
+                }
 
                 #space{
-                    height: 50px;
+                    height:20px;
                 }
 
 				h1{
@@ -61,10 +86,23 @@ function Venues(){
 					padding: 40px;
 					text-align: center;
 				} 
+                .addvenue {
+					width: 200px;
+					text-align: center;
+				} 
 				.boxhead {
 					text-decoration: none;
 				}
-		
+                .btn{
+                    padding: 10px;
+                    border: 1px solid #d8d8d8;
+                    background-color: #f9f9f9;
+                    border-radius: 3px;
+                }
+                .info {
+                    border-color: #2196F3;
+                    color: dodgerblue
+                }
 				.btn:hover {
 					color: black;
 				}
