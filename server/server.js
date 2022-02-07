@@ -334,10 +334,10 @@ app.get("/player/:player_id/battingcarrer", async (req, res) => {
     try {
         const { player_id } = req.params;
         const allTodos = await pool.query(`SELECT COUNT(match_id) as matches, SUM(runs) as runs,
-         SUM(four_runs) AS four, SUM(six_runs) AS six,
-          SUM(CASE WHEN runs>=50 THEN 1 ELSE 0 END) as fifty, MAX(runs) AS hs,
-          ROUND(SUM(runs)*100.0/SUM(balls_faced),3) AS strike_rate,
-           ROUND(SUM(runs)*1.0/SUM(outs),3) AS average
+        SUM(four_runs) AS four, SUM(six_runs) AS six,
+        SUM(CASE WHEN runs>=50 THEN 1 ELSE 0 END) as fifty, MAX(runs) AS hs,
+        ROUND(SUM(runs)*100.0/SUM(balls_faced),3) AS strike_rate,
+        CASE WHEN SUM(outs)=0 THEN NULL ELSE ROUND(SUM(runs)*1.0/SUM(outs),3) END AS average
         FROM( SELECT ball_by_ball.match_id, SUM(ball_by_ball.runs_scored) as runs, SUM(CASE WHEN ball_by_ball.out_type='NULL' THEN 0 ELSE 1 END ) as outs, SUM(CASE WHEN ball_by_ball.runs_scored=4 THEN 4 ELSE 0 END) as four_runs, SUM(CASE WHEN ball_by_ball.runs_scored=6 THEN 6 ELSE 0 END) as six_runs, COUNT(ball_by_ball.ball_id) as balls_faced
         FROM ball_by_ball
         WHERE ball_by_ball.striker=$1
